@@ -24,6 +24,8 @@ Route::post('/login', function () {
 
 });
 
+
+
 Route::group(['middleware' => 'auth:api'], function (){
     Route::post('/users/add', [UsersController::class, 'store']);
 
