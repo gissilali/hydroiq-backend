@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TasksController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/login', function () {
+
+});
+
+Route::group(['middleware' => 'auth:api'], function (){
+    Route::post('/users/add', [UsersController::class, 'store']);
+
+    Route::post('tasks/assign', [TasksController::class, 'assignTaskToUser']);
 });

@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $casts = [
         'date_of_birth' => 'datetime',
     ];
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'tasks_users_join', 'user_id', 'task_id');
+    }
 }
