@@ -14,7 +14,7 @@ class TaskTransformer extends TransformerAbstract
             'name' => $task->name,
             'description' => $task->description,
             'due_date' => $task->due_date,
-            'assigned_users' => $task->users
+            'assigned_users' => fractal($task->users, new UserTransformer())
         ];
     }
 }
