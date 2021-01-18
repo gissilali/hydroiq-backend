@@ -67,4 +67,17 @@ class TasksController extends Controller
             'data' => fractal($tasks, new TaskTransformer())
         ]);
     }
+
+    public function show($id)
+    {
+        try {
+            return response()->json([
+                'data' => fractal(Task::findOrFail($id), new TaskTransformer())
+            ]);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'message' => __('requested task')
+            ], 404);
+        }
+    }
 }
