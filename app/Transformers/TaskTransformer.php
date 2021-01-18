@@ -14,7 +14,7 @@ class TaskTransformer extends TransformerAbstract
             'id' => $task->id,
             'name' => $task->name,
             'description' => $task->description,
-            'due_date' =>  Carbon::parse($user->date_of_birth)->format('M d, Y'),
+            'due_date' =>  Carbon::parse($task->due_date)->format('M d, Y'),
             'assigned_users' => fractal($task->users, new UserTransformer())
         ];
     }
