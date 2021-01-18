@@ -62,7 +62,7 @@ class TasksController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = Task::where('id', 'desc')->get();
+        $tasks = Task::orderBy('created_at', 'desc')->get();
         return response()->json([
             'data' => fractal($tasks, new TaskTransformer())
         ]);
