@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function (){
     Route::post('/users/add', [UsersController::class, 'store']);
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/tasks/add', [TasksController::class, 'store']);
+    Route::get('/tasks', [TasksController::class, 'index']);
 
     Route::post('tasks/{task_id}/assign', [TasksController::class, 'assignTaskToUsers']);
 });

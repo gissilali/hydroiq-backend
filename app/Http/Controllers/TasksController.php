@@ -59,4 +59,12 @@ class TasksController extends Controller
             'data' => fractal($task->refresh(), new TaskTransformer())
         ], 201);
     }
+
+    public function index(Request $request)
+    {
+        $tasks = Task::where('created_at', 'desc')->get();
+        return response()->json([
+            'data' => fractal($tasks, new TaskTransformer())
+        ]);
+    }
 }
