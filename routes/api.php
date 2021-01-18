@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\ApiTokenController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -20,14 +22,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', function () {
-
-});
+Route::post('/oauth/token', [ApiTokenController::class, 'issueToken']);
+Route::post('/login', [LoginController::class, 'login'])->name('api.login');
 
 
 
 Route::group(['middleware' => 'auth:api'], function (){
     Route::post('/users/add', [UsersController::class, 'store']);
+    Route::get('/users', [UsersController::class, 'index']);
+    Route::post('/tasks/add', [TasksController::class, 'store']);
 
     Route::post('tasks/{task_id}/assign', [TasksController::class, 'assignTaskToUsers']);
 });

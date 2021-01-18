@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Transformers\UserTransformer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -10,7 +12,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-
+            'data' => fractal(User::orderBy('created_at', 'desc')->get(), new UserTransformer())
         ]);
     }
 
@@ -26,12 +28,12 @@ class UsersController extends Controller
 
         return response()->json([
             'message' => __('user created'),
-            'data' => User::create([
+            'data' => fractal(User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'date_of_birth' => $request->date_of_birth,
+                'date_of_birth' => Carbon::parse($request->date_of_birth),
                 'creator_id' => $request->user()->id,
-            ])
+            ]), new UserTransformer())
         ], 201);
     }
 }
